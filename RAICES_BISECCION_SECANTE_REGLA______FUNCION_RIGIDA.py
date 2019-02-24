@@ -21,18 +21,24 @@ def cambia_cotas_b(inferior,superior):
             inferior = nuevo_valor
         return inferior, superior
 
-def cambia_cotas_rf(penultimo, ultimo):
-    nuevo_valor = ultimo - (f(ultimo)*((penultimo-ultimo)/(f(penultimo)-f(ultimo))))
+def cambia_cotas_rf(valor_fijo, penultimo, ultimo, primera):
+    nuevo_valor = ultimo - (f(ultimo)*((valor_fijo-ultimo)/(f(valor_fijo)-f(ultimo))))
 
-    if f(nuevo_valor) < 0:
-        if f(penultimo) > 0:
-            ultimo = penultimo
-    else:
-        if f(ultimo) > 0:
-            ultimo = penultimo
-    primera = False
+    if primera:
+        if f(nuevo_valor) < 0:
+            if f(penultimo) > 0:
+                valor_fijo = penultimo
+            else:
+                valor_fijo = ultimo
+        else:
+            if f(ultimo) > 0:
+                valor_fijo = penultimo
+            else:
+                valor_fijo = ultimo
 
-    return ultimo, nuevo_valor
+        primera = False
+
+    return valor_fijo, ultimo, nuevo_valor, primera
 
 def cambia_cotas_s(penultimo, ultimo, primera):
     nuevo_valor = ultimo - (f(ultimo)*((penultimo-ultimo)/(f(penultimo)-f(ultimo))))
@@ -56,7 +62,7 @@ for x in [t*0.1 for t in range(0,21)]:
 
 
 #TOLERANCIA Y COTAS PARA EL PRIMER MÉTODO
-tol = 0.001
+tol = 0.007
 cotas = (0.6,0.7)
 
 print('{:-^60}'.format('BISECCIÓN') + '\n')
@@ -75,27 +81,28 @@ while True:
 
 
 #TOLERANCIA Y COTAS PARA EL SEGUNDO MÉTODO
-tol = 0.006
-cotas = (0.6,0.7)
+tol = 0.007
+cotas = (0.6,0.6,0.7, True)
 
 print('\n\n')
 print('{:-^60}'.format('REGLA FALSA') + '\n')
-print('{:^10}'.format('PENULTIMO') + '\t' + '{:^10}'.format('ULTIMO') + '\t' +
-    '{:^10}'.format('f(P)') + '\t' + '{:^10}'.format('f(U)') + '\t' +
+print('{:^10}'.format('V. FIJO') + '\t' + '{:^10}'.format('PENULTIMO') + '\t' +
+    '{:^10}'.format('ULTIMO') + '\t' + '{:^10}'.format('f(P)') + '\t' + '{:^10}'.format('f(U)') + '\t' +
     '{:^10}'.format('ERROR A') + '\n')
 
 while True:
-    print('{:10.7f}'.format(cotas[0]) + '\t' +'{:10.7f}'.format(cotas[1]) + '\t' +'{:10.7f}'.format(f(cotas[0])) + '\t' + '{:10.7f}'.format(f(cotas[1])) + '\t' +
-          '{:10.7f}'.format(math.fabs(cotas[0]-cotas[1])) + '\n')
-    if math.fabs(cotas[0]-cotas[1]) <= tol:
+    print('{:10.7f}'.format(cotas[0]) + '\t' +'{:10.7f}'.format(cotas[1]) + '\t' +'{:10.7f}'.format(cotas[2]) +
+    '\t' +'{:10.7f}'.format(f(cotas[0])) + '\t' + '{:10.7f}'.format(f(cotas[2])) + '\t' +
+    '{:10.7f}'.format(math.fabs(cotas[1]-cotas[2])) + '\n')
+    if math.fabs(cotas[1]-cotas[2]) <= tol:
         break
-    cotas = cambia_cotas_rf(cotas[0],cotas[1])
+    cotas = cambia_cotas_rf(cotas[0],cotas[1], cotas[2], cotas[3])
 
 
 
 
 #TOLERANCIA Y COTAS PARA EL TERCER MÉTODO
-tol = 0.006
+tol = 0.007
 cotas = (0.6,0.7,True)
 
 print('\n\n')
