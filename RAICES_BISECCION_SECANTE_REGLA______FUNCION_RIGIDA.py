@@ -58,7 +58,7 @@ def cambia_cotas_s(penultimo, ultimo, primera):
 # Tabla incial
 print('{:-^60}'.format('TABLA'))
 for x in [t*0.1 for t in range(0,21)]:
-     print('{:.1f}'.format(x) + '\t' + '{:5.2f}'.format(math.exp(x)-3*x))
+     print('{:.1f}'.format(x) + '\t' + '{:5.2f}'.format(f(x)))
 
 
 #TOLERANCIA Y COTAS PARA EL PRIMER MÉTODO
