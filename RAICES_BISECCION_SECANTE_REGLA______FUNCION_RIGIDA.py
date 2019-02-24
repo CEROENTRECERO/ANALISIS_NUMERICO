@@ -1,11 +1,8 @@
 import math
 
-# DEFINICIÓN DE FUNCIÓ:
+# DEFINICIÓN DE FUNCIÓNES:
 def f(x):
     return math.exp(x)-3*x
-
-def int_secante(punto_1, punto_2):
-    return punto_2 - (f(punto_2)*((punto_1-punto_2)/(f(punto_1)-f(punto_2))))
 
 def cambia_cotas_b(inferior,superior):
     nuevo_valor = (inferior + superior)/2
@@ -37,9 +34,6 @@ def cambia_cotas_rf(penultimo, ultimo):
 
     return ultimo, nuevo_valor
 
-tol = 0.001
-cotas = (0.6,0.7)
-
 def cambia_cotas_s(penultimo, ultimo, primera):
     nuevo_valor = ultimo - (f(ultimo)*((penultimo-ultimo)/(f(penultimo)-f(ultimo))))
 
@@ -54,8 +48,6 @@ def cambia_cotas_s(penultimo, ultimo, primera):
 
     return ultimo, nuevo_valor, primera
 
-tol = 0.001
-cotas = (0.6,0.7)
 
 # Tabla incial
 print('{:-^60}'.format('TABLA'))
@@ -63,7 +55,9 @@ for x in [t*0.1 for t in range(0,21)]:
      print('{:.1f}'.format(x) + '\t' + '{:5.2f}'.format(math.exp(x)-3*x))
 
 
-
+#TOLERANCIA Y COTAS PARA EL PRIMER MÉTODO
+tol = 0.001
+cotas = (0.6,0.7)
 
 print('{:-^60}'.format('BISECCIÓN') + '\n')
 print('{:^10}'.format('INFERIOR') + '\t' + '{:^10}'.format('SUPERIOR') + '\t' +
@@ -80,12 +74,12 @@ while True:
 
 
 
-
-print('\n\n')
-print('{:-^60}'.format('REGLA FALSA') + '\n')
+#TOLERANCIA Y COTAS PARA EL SEGUNDO MÉTODO
 tol = 0.006
 cotas = (0.6,0.7)
 
+print('\n\n')
+print('{:-^60}'.format('REGLA FALSA') + '\n')
 print('{:^10}'.format('PENULTIMO') + '\t' + '{:^10}'.format('ULTIMO') + '\t' +
     '{:^10}'.format('f(P)') + '\t' + '{:^10}'.format('f(U)') + '\t' +
     '{:^10}'.format('ERROR A') + '\n')
@@ -100,12 +94,12 @@ while True:
 
 
 
-
-print('\n\n')
-print('{:-^60}'.format('SECANTE') + '\n')
+#TOLERANCIA Y COTAS PARA EL TERCER MÉTODO
 tol = 0.006
 cotas = (0.6,0.7,True)
 
+print('\n\n')
+print('{:-^60}'.format('SECANTE') + '\n')
 print('{:^10}'.format('PENULTIMO') + '\t' + '{:^10}'.format('ULTIMO') + '\t' +
     '{:^10}'.format('f(P)') + '\t' + '{:^10}'.format('f(U)') + '\t' +
     '{:^10}'.format('ERROR A') + '\n')
